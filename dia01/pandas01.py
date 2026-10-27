@@ -43,3 +43,5 @@ sr_idades = pd.Series(idades, index = indexs)
 print(sr_idades)
 '''Agora é possivel acessar o valor com a posição dos nomes, 
 o .iloc ignora o index '''
+
+# %%
