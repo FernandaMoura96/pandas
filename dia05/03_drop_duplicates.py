@@ -28,3 +28,15 @@ transacoes.sort_values("DtCriacao") #ordenar
 transacoes['data'] = pd.to_datetime(transacoes["DtCriacao"]).dt.date #atribuição de data, e somente data
 transacoes.drop_duplicates(keep= 'first', subset= ["IdCliente","data" ]) # deduplicar a data com id 
 # %%
+
+transacoes.head()
+
+transacoes["data"] = pd.to_datetime(transacoes["DtCriacao"]).dt.date
+transacoes = transacoes.sort_values("DtCriacao") 
+
+
+
+first = transacoes.drop_duplicates(keep="first", subset=["idCliente", "data"])
+
+last = transacoes.drop_duplicates(keep="last", subset=["idCliente", "data"])
+# %%
