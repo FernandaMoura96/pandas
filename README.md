@@ -1,31 +1,123 @@
-# 📊 Python Data Analysis (Estudos Inicial com Pandas)
+# 🐼 Pandas: Estudos Práticos para Análise de Dados
 
-Este repositório foi criado para documentar e organizar os meus estudos práticos em Python voltados para a área de Análise de Dados. Aqui, exploro desde a manipulação de estruturas de dados básicas até a extração de métricas estatísticas utilizando o **Pandas**.
+Repositório para documentar minha evolução com a biblioteca **Pandas**, organizado em dias de estudo. Cada pasta reúne os scripts e os exercícios daquele dia, com foco em manipulação, transformação e análise de dados tabulares.
 
----
-
-## 🛠️ Tecnologias e Ferramentas
-
-* **Linguagem:** Python 3.13+
-* **Biblioteca Principal:** Pandas
-* **Ambiente de Desenvolvimento:** VS Code (utilizando Modo Interativo/Células Jupyter `#%%`)
-* **Controle de Versão:** Git & GitHub
+> 🎯 **Objetivo:** consolidar a base técnica para atuar como Analista de Dados, trazendo para o Python a lógica que já uso em SQL e na rotina comercial.
 
 ---
 
-## 📁 Estrutura do Projeto e Aprendizados
+## 🛠️ Tecnologias
 
-* **Manipulação de Séries (`pd.Series`):** Criação de estruturas unidimensionais associando listas de dados (como idades de pessoas) a índices específicos.
-* **Análise Estatística Descritiva:** Utilização de métodos nativos do Pandas para extrair insights rápidos de um conjunto de dados:
-  * `.mean()` — Cálculo da média aritmética.
-  * `.var()` — Análise de variância para entender a dispersão dos dados.
-  * `.describe()` — Resumo estatístico completo (contagem, mínimo, máximo, mediana e quartis).
+| Item | Detalhe |
+|------|---------|
+| Linguagem | Python 3.13+ |
+| Biblioteca principal | Pandas |
+| Ambiente | VS Code (modo interativo, células `# %%`) |
+| Versionamento | Git e GitHub |
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 📁 Estrutura do repositório
 
-1. Certifique-se de ter o Python e o Pandas instalados no seu ambiente.
-2. Clone este repositório:
-```bash
-   git clone [https://github.com/FernandaMoura96/python_data_analysis.git](https://github.com/FernandaMoura96/python_data_analysis.git)
+```
+pandas/
+├── data/        # Bases de dados utilizadas nos exercícios
+├── dia01/       # Séries e estatística descritiva
+├── dia02/       # Métodos e Colunas 
+├── dia03/       # .copy()
+├── dia04/       # Ordenação de colunas 
+├── dia05/       # Eliminando Duplicatas 
+├── dia06/       # .apply()
+├── dia07/       # Groupby
+├── dia08/       # Merge 
+└── README.md
+
+---
+
+## 📚 Conteúdos abordados
+
+### Estruturas de dados
+- `pd.Series` com índices personalizados
+- `pd.DataFrame` e leitura de arquivos
+
+### Estatística descritiva
+- `.mean()`, `.var()` e `.describe()`
+
+### Junção de tabelas (`merge`)
+Cruzamento de transações, produtos e clientes para responder: *qual cliente mais realizou transações com o produto "Presença Streak"?* Compare as duas abordagens:
+
+**1. Juntar tudo e filtrar depois**
+```python
+df_full = cliente_transacao_produto.merge(produto, on="IdProduto")
+df_full = df_full[df_full["DescNomeProduto"] == "Presença Streak"]
+
+(df_full.groupby(by=["IdCliente"])["IdTransacao"]
+    .count()
+    .sort_values(ascending=False)
+    .head(1))
+```
+
+**2. Filtrar antes e encadear os joins (mais direto e performático)**
+```python
+produto_streak = produto[produto["DescNomeProduto"] == "Presença Streak"]
+
+resultado = (
+    transacoes.merge(transacao_produto, on="IdTransacao", how="left")
+    .merge(produto_streak, on="IdProduto", how="right")
+    .groupby(by="IdCliente")["IdTransacao"]
+    .count()
+    .sort_values(ascending=False)
+    .head(1)
+)
+```
+
+**Resultado:** as duas abordagens retornam o mesmo cliente, com **451 transações**, em uma base de mais de 354 mil linhas.
+
+**Aprendizados**
+- Filtrar antes do join reduz o volume de dados cruzados.
+- Encadear métodos deixa o código mais limpo e legível.
+- O tipo de join (`left`, `right`, `inner`) muda o resultado, então vale conferir a lógica.
+
+### Equivalência com SQL
+
+| SQL | Pandas |
+|-----|--------|
+| `JOIN` | `merge()` |
+| `WHERE` | filtro booleano `df[df["col"] == valor]` |
+| `GROUP BY` | `groupby()` |
+| `COUNT()` | `.count()` |
+| `ORDER BY` | `sort_values()` |
+| `LIMIT` | `head()` |
+
+---
+
+## 🚀 Como executar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/FernandaMoura96/pandas.git
+   cd pandas
+   ```
+
+2. (Opcional) Crie e ative um ambiente virtual:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate    # Windows: .venv\Scripts\activate
+   ```
+
+3. Instale a dependência:
+   ```bash
+   pip install pandas
+   ```
+
+4. Abra a pasta no VS Code e execute os arquivos `.py` célula por célula (`# %%`) no modo interativo.
+
+---
+
+## 👩‍💻 Autora
+
+**Fernanda Moura**
+Profissional com 15 anos de experiência em operações comerciais, em transição para Análise de Dados.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-fernanda--moura96-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/fernanda-moura96)
+[![GitHub](https://img.shields.io/badge/GitHub-FernandaMoura96-181717?logo=github&logoColor=white)](https://github.com/FernandaMoura96)
