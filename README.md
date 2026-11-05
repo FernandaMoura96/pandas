@@ -1,10 +1,57 @@
 # 🐼 Pandas: Estudos Práticos para Análise de Dados
 
-Repositório para documentar minha evolução com a biblioteca **Pandas**, organizado em dias de estudo. Cada pasta reúne os scripts e os exercícios daquele dia, com foco em manipulação, transformação e análise de dados tabulares.
+![Python](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?logo=visualstudiocode&logoColor=white)
+![Status](https://img.shields.io/badge/status-finalizado-brightgreen)
 
-> 🎯 **Objetivo:** consolidar a base técnica para atuar como Analista de Dados, trazendo para o Python a lógica que já uso em SQL e na rotina comercial.
+Repositório que documenta minha jornada de estudos práticos com a biblioteca **Pandas**, do básico (Series e estatística descritiva) a técnicas aplicadas a problemas reais de negócio, como junção de bases (*merge/join*) e **projeção de faturas de cartão de crédito**.
+
+O objetivo é consolidar, de forma organizada e reproduzível, as competências necessárias para a atuação como **Analista de Dados**.
 
 ---
+
+## 📌 Sumário
+
+- [Competências demonstradas](#-competências-demonstradas)
+- [Destaque: projeção de faturas de cartão de crédito](#-destaque-projeção-de-faturas-de-cartão-de-crédito)
+- [Estrutura do repositório](#-estrutura-do-repositório)
+- [Tecnologias](#-tecnologias)
+- [Como executar](#-como-executar)
+- [Autora](#-autora)
+
+---
+
+## 🎯 Competências demonstradas
+
+| Área | O que foi praticado |
+|---|---|
+| **Estruturas de dados** | `pd.Series`, `pd.DataFrame`, índices e tipos de dados |
+| **Estatística descritiva** | `.mean()`, `.var()`, `.describe()` |
+| **Leitura e tratamento** | `pd.read_csv`, conversão de tipos com `pd.to_datetime`, criação de colunas derivadas |
+| **Combinação de bases** | Junção de tabelas com `merge` / `join` |
+| **Transformação de dados** | `explode`, `apply`, `groupby`, `pivot` (de formato "largo" para "longo" e vice-versa) |
+| **Séries temporais** | Projeção de datas com `pd.DateOffset` |
+
+---
+
+## 💳 Destaque: projeção de faturas de cartão de crédito
+
+### Contexto de negócio
+
+Quando um cliente parcela uma compra, a base de transações registra apenas o **valor total** e a **quantidade de parcelas**. Porém, para áreas de crédito, cobrança e planejamento financeiro, a pergunta relevante é outra:
+
+> *"Quanto cada cliente terá de fatura em cada um dos próximos meses?"*
+
+Este case simula esse cenário com **dados fictícios** e entrega uma visão mês a mês do valor projetado por cliente.
+
+### Abordagem
+
+1. **Cálculo da parcela:** valor da venda ÷ quantidade de parcelas.
+2. **Expansão das compras:** cada transação vira várias linhas, uma por parcela, com `explode`.
+3. **Projeção do vencimento:** soma de meses à data da transação com `pd.DateOffset`.
+4. **Consolidação:** agrupamento por cliente e mês, somando todas as parcelas que caem na mesma fatura.
+5. **Visão final:** tabela dinâmica com clientes nas linhas e meses nas colunas.
 
 ## 🛠️ Tecnologias
 
