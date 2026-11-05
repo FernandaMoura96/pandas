@@ -29,7 +29,10 @@ pandas/
 ├── dia05/       # Eliminando Duplicatas 
 ├── dia06/       # .apply()
 ├── dia07/       # Groupby
-├── dia08/       # Merge 
+├── dia08/       # Merge
+├── dia09/       # Conexão com banco de dados
+├── dia10/       # Stack/Unstack/Pivot/Explode
+├── ipea         # Base de dados utilizada nos exercícios
 └── README.md
 
 ---
@@ -55,28 +58,8 @@ df_full = df_full[df_full["DescNomeProduto"] == "Presença Streak"]
     .count()
     .sort_values(ascending=False)
     .head(1))
+
 ```
-
-**2. Filtrar antes e encadear os joins (mais direto e performático)**
-```python
-produto_streak = produto[produto["DescNomeProduto"] == "Presença Streak"]
-
-resultado = (
-    transacoes.merge(transacao_produto, on="IdTransacao", how="left")
-    .merge(produto_streak, on="IdProduto", how="right")
-    .groupby(by="IdCliente")["IdTransacao"]
-    .count()
-    .sort_values(ascending=False)
-    .head(1)
-)
-```
-
-**Resultado:** as duas abordagens retornam o mesmo cliente, com **451 transações**, em uma base de mais de 354 mil linhas.
-
-**Aprendizados**
-- Filtrar antes do join reduz o volume de dados cruzados.
-- Encadear métodos deixa o código mais limpo e legível.
-- O tipo de join (`left`, `right`, `inner`) muda o resultado, então vale conferir a lógica.
 
 ### Equivalência com SQL
 
